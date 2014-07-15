@@ -22,7 +22,7 @@ module.exports = class SparkyDirective
 
     pointSets = scope.datasets
 
-    pointCount = scope.pointCount ? @getPointCount pointSets
+    pointCount = scope.pointCount ? @getMaxPointSetLength pointSets
 
     if scope.bar
       normaliser = @getNormaliser scope.dimensions.height / 2, pointSets, scope.verticalMax
@@ -39,16 +39,20 @@ module.exports = class SparkyDirective
       scope.range = @getRange scope.dimensions, normaliser, scope.rangeBottom, scope.rangeTop
 
 
-  getPointSetMax: (pointSets) ->
-    return Math.max ([].concat pointSets...)...
+  getMaxPointValue: (pointSets) ->
+    max = -Infinity
+    for pointSet in pointSets then for point in pointSet when point > max then max = point
+    return max
 
 
-  getPointCount: (pointSets) ->
-    return Math.max pointSets.map((set) -> set.length)...
+  getMaxPointSetLength: (pointSets) ->
+    max = 0
+    for pointSet in pointSets then if pointSet.length > max then max = pointSet.length
+    return max
 
 
   getNormaliser: (height, pointSets, pointSetMax) =>
-    pointSetMax = pointSetMax ? @getPointSetMax pointSets
+    pointSetMax = pointSetMax ? @getMaxPointValue pointSets
     # -2 allows the circle to fit.
     return (height - 2) / pointSetMax
 
@@ -58,25 +62,22 @@ module.exports = class SparkyDirective
 
 
   getPointX: (index, width, pointCount) ->
-    return index * (width / (pointCount - 1))
+    return index * width / (pointCount - 1)
 
 
   getPointY: (index, height, pointSet) ->
     return Math.floor height - pointSet[index]
 
 
-  getPoint: (index, dimensions, pointSet, pointCount) =>
-    x = @getPointX index, dimensions.width, pointCount
-    y = @getPointY index, dimensions.height, pointSet
-    return "#{Math.floor x},#{y} "
-
-
   getPolyline: (dimensions, pointSet, pointCount, filled) =>
-    polyline = pointSet.map (point, index) => @getPoint index, dimensions, pointSet, pointCount
+    polyline = pointSet.map (point, index) =>
+      x = @getPointX index, dimensions.width, pointCount
+      y = @getPointY index, dimensions.height, pointSet
+      return "#{Math.floor x},#{y}"
     if filled
-      polyline.unshift "0,#{dimensions.height} "
+      polyline.unshift "0,#{dimensions.height}"
       polyline.push "#{Math.floor @getPointX(pointSet.length - 1, dimensions.width, pointCount)},#{dimensions.height}"
-    return polyline.join ''
+    return polyline.join ' '
 
 
   getCircle: (dimensions, pointSet, pointCount) =>
