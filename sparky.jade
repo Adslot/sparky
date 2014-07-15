@@ -1,0 +1,30 @@
+svg.sparky(
+    ng-class="{'filled': filled}"
+    ng-attr-height='{{dimensions.height}}'
+    ng-attr-width='{{dimensions.width}}')
+
+  rect.range(
+      ng-if='rangeTop'
+      x='0'
+      ng-attr-y='{{range.top}}'
+      ng-attr-height='{{range.height}}'
+      ng-attr-width='{{range.width}}')
+
+  g(
+      ng-repeat='line in lines'
+      ng-class='"line-" + line.index')
+
+    polyline(ng-attr-points='{{line.polyline}}')
+
+    circle(
+        r='2'
+        ng-attr-cx='{{line.circle.x}}'
+        ng-attr-cy='{{line.circle.y}}')
+
+  rect.bar(
+      ng-repeat='bar in bars'
+      ng-attr-x='{{bar.x}}'
+      ng-attr-y='{{bar.y}}'
+      ng-attr-width='{{barsWidth}}'
+      ng-attr-height='{{bar.height}}'
+      ng-class='bar.class')

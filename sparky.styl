@@ -1,0 +1,82 @@
+@require "variable.styl"
+
+$color-salmon = #FF5D68
+$color-charcoal = #39464E
+$color-aqua = #00D4F6
+$color-orange = #FF845C
+$color-purple = #832599
+
+status-colors()
+  &.positive
+    color: $color-positive
+
+  &.negative
+    color: $color-negative
+
+  &.info
+    color: $color-info
+
+  &.warning
+  &.pending
+    color: $color-warning
+
+.sparky
+  vertical-align: top
+
+  polyline
+    fill: none
+    stroke: currentColor
+
+  circle
+  rect
+    fill: currentColor
+
+  &.filled
+
+    polyline
+      fill: currentColor
+      stroke: none
+
+    circle
+    rect
+      fill: none
+
+  g
+    color: $color-grayLight
+
+  .line-1
+    color: $color-salmon
+
+  .line-2
+    color: $color-aqua
+
+  .line-3
+    color: $color-charcoal
+
+  .line-4
+    color: $color-purple
+
+  .range
+    fill: $color-grayLightest
+
+  .bar
+    status-colors()
+
+  &.positive
+  &.negative
+  &.info
+  &.warning
+  &.pending
+    g
+      color: inherit
+    .bar
+      color: inherit
+
+  status-colors()
+
+.sparky-text
+  display: inline-block
+  text-align: right
+  vertical-align: top
+
+  status-colors()
