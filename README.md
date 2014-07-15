@@ -22,7 +22,7 @@ Sparky
 ## Usage:
 `<sparky datasets='[[0,1,2],[3,4,5]]'>` datasets takes an array of arrays.
 
-Optional settings
+Optional attributes
 
 `bar='true'`
 
