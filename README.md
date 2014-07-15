@@ -15,5 +15,29 @@ Sparky
 - Overall colors or positive, neutral, negative colors.
 
 ##### All graphs
-- Scale to max value (E.g. 60 out of 100) or leave as automatic.
+- Scale to max value (E.g. 6 out of 10) or leave as automatic.
 - Optionally scale to number of points (E.g. 15 days out of 31 days) or leave as automatic.
+
+
+## Usage:
+`<sparky datasets='[[0,1,2],[3,4,5]]'>` datasets takes an array of arrays.
+
+Optional settings
+
+`bar='true'`
+
+`vertical-max='10'`
+
+`point-count='30'`
+
+`range-bottom='3'`
+
+`range-top='4'`
+
+`w='500'` (in pixels)
+
+`h='200'` (in pixels)
+
+`color-index='4'` (override the color class applied, used if you want colors to match between a multiple line graph and a single line graph.)
+
+`filled='true'`
