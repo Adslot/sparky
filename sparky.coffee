@@ -1,10 +1,7 @@
-_ = require 'underscore'
-template = require '../../../lib/views/components/sparky.jade'
-
 module.exports = class SparkyDirective
 
   restrict: 'E'
-  template: template
+  templateUrl: 'sparky'
   replace: true
   scope:
     datasets: '='
@@ -43,15 +40,11 @@ module.exports = class SparkyDirective
 
 
   getPointSetMax: (pointSets) ->
-    allPoints = _.flatten pointSets
-    return Math.max allPoints...
+    return Math.max ([].concat pointSets...)...
 
 
   getPointCount: (pointSets) ->
-    lengths = []
-    for set in pointSets
-      lengths.push set.length
-    return Math.max lengths...
+    return Math.max pointSets.map((set) -> set.length)...
 
 
   getNormaliser: (height, pointSets, pointSetMax) =>
@@ -65,7 +58,7 @@ module.exports = class SparkyDirective
 
 
   getPointX: (index, width, pointCount) ->
-    return 0 + (index * (width / (pointCount - 1)))
+    return index * (width / (pointCount - 1))
 
 
   getPointY: (index, height, pointSet) ->
@@ -73,17 +66,17 @@ module.exports = class SparkyDirective
 
 
   getPoint: (index, dimensions, pointSet, pointCount) =>
-    return "#{Math.floor @getPointX(index, dimensions.width, pointCount)},#{@getPointY(index,
-        dimensions.height, pointSet)} "
+    x = @getPointX index, dimensions.width, pointCount
+    y = @getPointY index, dimensions.height, pointSet
+    return "#{Math.floor x},#{y} "
 
 
   getPolyline: (dimensions, pointSet, pointCount, filled) =>
-    polylineData = ''
-    if filled then polylineData += "0,#{dimensions.height} "
-    polylineData += @getPoint index, dimensions, pointSet, pointCount for point, index in pointSet
+    polyline = pointSet.map (point, index) => @getPoint index, dimensions, pointSet, pointCount
     if filled
-      polylineData += "#{Math.floor @getPointX(pointSet.length - 1, dimensions.width, pointCount)},#{dimensions.height}"
-    return polylineData
+      polyline.unshift "0,#{dimensions.height} "
+      polyline.push "#{Math.floor @getPointX(pointSet.length - 1, dimensions.width, pointCount)},#{dimensions.height}"
+    return polyline.join ''
 
 
   getCircle: (dimensions, pointSet, pointCount) =>
@@ -103,10 +96,8 @@ module.exports = class SparkyDirective
 
 
   getLines: (dimensions, pointSets, normaliser, pointCount, colorIndex, filled) ->
-    lines = []
-    for pointSet, index in pointSets
-      lines.push @getLine dimensions, pointSets[index], normaliser, pointCount, pointSets.length, index, colorIndex, filled
-    return lines
+    return pointSets.map (pointSet, index) =>
+      @getLine dimensions, pointSets[index], normaliser, pointCount, pointSets.length, index, colorIndex, filled
 
 
   getRange: (dimensions, normaliser, bottom, top) ->
@@ -137,7 +128,5 @@ module.exports = class SparkyDirective
 
   getBars: (dimensions, pointSets, normaliser, pointCount) ->
     normalisedPointSet = @getNormalisedPointSet pointSets[0], normaliser
-    bars = []
-    for point, index in normalisedPointSet
-      bars.push @getBar dimensions, point, pointCount, index
-    return bars
+    return normalisedPointSet.map (point, index) =>
+      @getBar dimensions, point, pointCount, index
