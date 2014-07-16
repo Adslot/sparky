@@ -41,3 +41,24 @@ Optional attributes
 `color-index='4'` (override the color class applied, used if you want colors to match between a multiple line graph and a single line graph.)
 
 `filled='true'`
+
+
+Slicey
+==========
+#### Sparkline directive using AngularJs and SVG with no other dependencies.
+
+![ScreenShot](https://raw.githubusercontent.com/Adslot/sparky/master/slicey-examples.png)
+
+##### Pie Charts
+- Donut charts.
+- Pass in statuses with the data to assign classes for coloring.
+- Automagically normalises data into percentages of the circle.
+
+## Usage:
+`<slicey dataset='[{status: 'warning', value: 10},{status: 'positive', value: 5}]'>` dataset takes an array of objects.
+
+Optional attributes
+
+`donut='true'`
+
+`diameter='100'` (in pixels)
