@@ -1,0 +1,21 @@
+svg.slicey(
+    ng-attr-height='{{diameter || 100}}'
+    ng-attr-width='{{diameter || 100}}'
+    viewBox="0 0 360 360")
+
+  //- This circle makes the blending better between arcs
+  circle.background(
+      r='179'
+      cx='180'
+      cy='180')
+
+  path(
+      ng-repeat='arc in arcs'
+      ng-attr-d='M180,180 L{{arc.x1}},{{arc.y1}} A180,180 0 {{arc.largeArcFlag}},1 {{arc.x2}},{{arc.y2}} z'
+      ng-class='arc.color')
+
+  circle.donut(
+      ng-if='donut'
+      r='90'
+      cx='180'
+      cy='180')
