@@ -9,9 +9,15 @@ module.exports = class SliceyDirective
     diameter: '@'
 
 
+  QUARTER = Math.PI / 2
+  HALF = Math.PI
+  ROUND = Math.PI * 2
+  RADIUS = 0.5
+
+
   link: (scope, element, attrs) =>
     values = @getValues scope.dataset
-    scope.total = @getTotal values
+    scope.total = @sum values
     scope.arcs = @getArcs scope.dataset, scope.total
 
 
@@ -19,39 +25,37 @@ module.exports = class SliceyDirective
     dataset.map (datum) -> datum.value
 
 
-  getTotal: (values) ->
+  sum: (values) ->
     total = 0
-    for value in values
-      total += value
+    for value in values then total += value
     return total
 
 
   getPointX: (angle) ->
-    return Math.round 180 + 180 * Math.cos(Math.PI * angle / 180)
+    return RADIUS * Math.cos angle
 
 
   getPointY: (angle) ->
-    return Math.round 180 + 180 * Math.sin(Math.PI * angle / 180)
+    return RADIUS * Math.sin angle
 
 
   getArcs: (dataset, total) =>
-    arcs =  []
+    arcs = new Array dataset.length
     startAngle = 0
-    endAngle = -90
+    endAngle = -QUARTER
 
-    for datum in dataset
-      angle = 360 * datum.value / total
+    for datum, index in dataset
+      angle = ROUND * datum.value / total
 
       startAngle = endAngle
       endAngle += angle
 
-      arc =
+      arcs[index] =
         x1: @getPointX startAngle
         y1: @getPointY startAngle
         x2: @getPointX endAngle
         y2: @getPointY endAngle
-        largeArcFlag: if angle > 180 then 1 else 0
+        largeArcFlag: if angle > HALF then 1 else 0
         color: datum.status
-      arcs.push arc
 
     return arcs

@@ -23,18 +23,19 @@ describe 'slicey', ->
 
       background = el.find('.background')
       expect(background.length).to.be 1
-      expect(background.attr 'r').to.be '179'
-      expect(background.attr 'cx').to.be '180'
-      expect(background.attr 'cy').to.be '180'
+      expect(background.attr 'r').to.be '.49'
+      expect(background.attr 'cx').to.be '0'
+      expect(background.attr 'cy').to.be '0'
 
       live = el.find('.live')
       expect(live.length).to.be 1
-      expect(live.attr 'd').to.be 'M180,180 L180,0 A180,180 0 1,1 53,307 z'
+      expect(live.attr 'd').to.be 'M0,0 L3.061616997868383e-17,-0.5 A0.5,0.5 0 1,1
+      -0.35355339059327373,0.3535533905932738 z'
 
       pending = el.find('.pending')
       expect(pending.length).to.be 1
-      expect(pending.attr 'd').to.be 'M180,180 L53,307 A180,180 0 0,1 180,0 z'
-
+      expect(pending.attr 'd').to.be 'M0,0 L-0.35355339059327373,0.3535533905932738 A0.5,0.5 0 0,1
+      -9.184850993605148e-17,-0.5 z'
       expect(el.find('.donut').length).to.be 0
 
       expect(el.attr 'width').to.be '100'
@@ -50,9 +51,9 @@ describe 'slicey', ->
 
       donut = el.find('.donut')
       expect(donut.length).to.be 1
-      expect(donut.attr 'r').to.be '90'
-      expect(donut.attr 'cx').to.be '180'
-      expect(donut.attr 'cy').to.be '180'
+      expect(donut.attr 'r').to.be '.25'
+      expect(donut.attr 'cx').to.be '0'
+      expect(donut.attr 'cy').to.be '0'
       done()
 
 
