@@ -16,19 +16,7 @@ module.exports = class SliceyDirective
 
 
   link: (scope, element, attrs) =>
-    values = @getValues scope.dataset
-    scope.total = @sum values
-    scope.arcs = @getArcs scope.dataset, scope.total
-
-
-  getValues: (dataset) ->
-    dataset.map (datum) -> datum.value
-
-
-  sum: (values) ->
-    total = 0
-    for value in values then total += value
-    return total
+    scope.arcs = @getArcs scope.dataset
 
 
   getPointX: (angle) ->
@@ -39,7 +27,10 @@ module.exports = class SliceyDirective
     return RADIUS * Math.sin angle
 
 
-  getArcs: (dataset, total) =>
+  getArcs: (dataset) =>
+    total = 0
+    for datum in dataset then total += datum.value
+
     arcs = new Array dataset.length
     startAngle = 0
     endAngle = -QUARTER
