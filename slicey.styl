@@ -1,0 +1,34 @@
+@require "variable.styl"
+
+$color-salmon = #FF5D68
+$color-charcoal = #39464E
+$color-aqua = #00D4F6
+$color-orange = #FF845C
+$color-purple = #832599
+
+status-colors()
+  &.positive
+    color: $color-positive
+
+  &.negative
+    color: $color-negative
+
+  &.info
+    color: $color-info
+
+  &.warning
+  &.pending
+    color: $color-warning
+
+.slicey
+  vertical-align: top
+
+  .background
+    fill: $color-grayDark
+
+  path
+    status-colors()
+    fill: currentColor
+
+  .donut
+    fill: $color-well
