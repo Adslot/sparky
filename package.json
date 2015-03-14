@@ -1,0 +1,54 @@
+{
+  "name": "sparky",
+  "version": "1.0.0",
+  "description": "Sparkline directive using AngularJs and SVG",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "sparky-coffee": "node_modules/.bin/coffee -c sparky.coffee",
+    "slicey-coffee": "node_modules/.bin/coffee -c slicey.coffee",
+    "sparky-jade": "node_modules/.bin/jade -P sparky.jade",
+    "slicey-jade": "node_modules/.bin/jade -P slicey.jade",
+    "sparky-styl": "node_modules/.bin/stylus sparky.styl",
+    "slicey-styl": "node_modules/.bin/stylus slicey.styl",
+    "build": "npm run sparky-coffee; npm run slicey-coffee; npm run sparky-jade; npm run slicey-jade; npm run sparky-styl; npm run slicey-styl"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Adslot/sparky.git"
+  },
+  "keywords": [
+    "angular",
+    "angular.js",
+    "angularjs",
+    "bar",
+    "chart",
+    "column",
+    "edwardtufte",
+    "graph",
+    "line",
+    "ng",
+    "pie",
+    "spark",
+    "sparkline",
+    "svg"
+  ],
+  "author": "Cameron Chamberlain @ Adslot",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Adslot/sparky/issues"
+  },
+  "homepage": "https://github.com/Adslot/sparky",
+  "dependencies": {
+    "angular": "^1.3.14"
+  },
+  "devDependencies": {
+    "coffee-script": "^1.9.1",
+    "coffeelint": "^1.9.2",
+    "jade": "^1.9.2",
+    "stylus": "^0.50.0"
+  }
+}
